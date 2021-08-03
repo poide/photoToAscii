@@ -127,4 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#Idea folder from pycharm
 .idea
+#Output from my code
+.output

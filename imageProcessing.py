@@ -2,12 +2,31 @@ import cv2
 import os.path
 def processImage(pixelPadding,pathToPhoto):
     imageName = os.path.basename(pathToPhoto)
-    image = cv2.imread("/home/pepe/Downloads/image.jpg")
+    image = cv2.imread(pathToPhoto)
     height, width, channels = image.shape
+
     aspectRatio = height/width
-    pixelPaddingHeight = pixelPadding
-    pixelPaddingWidth= int(pixelPaddingHeight*aspectRatio)
-    pixelPerRectangle = pixelPaddingWidth*pixelPaddingHeight
+    aspectRatioInverted = width / height
+
+    if aspectRatio > 1:
+        pixelPaddingHeight = pixelPadding
+        pixelPaddingWidth = int(pixelPaddingHeight*aspectRatio)
+        pixelPerRectangle = pixelPaddingWidth * pixelPaddingHeight
+
+    elif aspectRatioInverted > 1:
+        pixelPaddingWidth = pixelPadding
+        pixelPaddingHeight = int(pixelPaddingWidth*aspectRatioInverted)
+        pixelPerRectangle = pixelPaddingWidth * pixelPaddingHeight
+    else:
+        pixelPaddingWidth = pixelPadding
+        pixelPaddingHeight = pixelPadding
+        pixelPerRectangle = pixelPaddingWidth * pixelPaddingHeight
+
+
+    # checking if the path exist
+    if(not os.path.exists("output")):
+        os.mkdir("output")
+
     f = open("output/"+ imageName + ".txt", "w+")
     f.write(processFrame(width, height, image, pixelPaddingWidth, pixelPaddingHeight, pixelPerRectangle))
     f.close()
