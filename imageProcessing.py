@@ -1,6 +1,9 @@
 import cv2
 import os.path
 def processImage(pixelPadding,pathToPhoto):
+    print("Processing image")
+    print(pixelPadding)
+    print(pathToPhoto)
     imageName = os.path.basename(pathToPhoto)
     image = cv2.imread(pathToPhoto)
     height, width, channels = image.shape
